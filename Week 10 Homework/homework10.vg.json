@@ -103,7 +103,8 @@
         },
         "color": {
           "field": "Entity",
-          "type": "nominal"
+          "type": "nominal",
+          "title": "Countries"
         },
         "opacity": {
           "condition": { "param": "country_selection", "value": 0.6 },
