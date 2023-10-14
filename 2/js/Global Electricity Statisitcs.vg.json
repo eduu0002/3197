@@ -1,25 +1,28 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
-    "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/Data/global-data-on-sustainable-energy.csv"
+    "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/Data/Global%20Electricity%20Statistics_cleaned.csv"
   },
-  "hconcat": [
+  "params": [
     {
-      "width": 800,
-      "height": 500,
-      "title": "Global Access to electricity 2020",
+      "name": "year_select",
+      "value": 2021,
+      "bind": {
+        "input": "range",
+        "min": 2000,
+        "max": 2021,
+        "step": 1,
+        "name": "Select year: "
+      }
+    }
+  ],
+  "vconcat": [
+    {
+      "width": 400,
+      "title": "Global Electricity Production",
+      "resolve": { "scale": { "color": "independent" } },
       "projection": { "type": "equalEarth" },
       "layer": [
-        {
-          "data": {
-            "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/WorldMapWithGraticules.topojson",
-            "format": {
-              "type": "topojson",
-              "feature": "ne_110m_admin_0_countries"
-            }
-          },
-          "mark": { "type": "geoshape", "fill": "lightgray", "stroke": "white" }
-        },
         {
           "data": {
             "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/js/world_map_with_graticles.json",
@@ -30,193 +33,172 @@
           },
           "transform": [
             {
-              "lookup": "properties.NAME",
+              "calculate": "'Data is not available in ' + datum.properties.NAME",
+              "as": "note"
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "fill": "#ddd",
+            "stroke": "grey"
+          },
+          "encoding": { "tooltip": { "field": "note" } }
+        },
+
+        {
+          "transform": [
+            {
+              "lookup": "Country",
               "from": {
                 "data": {
-                  "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/Data/global-data-on-sustainable-energy.csv"
+                  "url": "world_map_with_graticles.json",
+                  "format": {
+                    "type": "topojson",
+                    "feature": "ne_110m_admin_0_countries"
+                  }
                 },
-                "key": "Entity",
-                "fields": ["Access to electricity (% of population)"]
-              }
+                "key": "properties.NAME"
+              },
+              "as": "geo"
             },
-            {
-              "calculate": "datum['Access to electricity (% of population)']",
-              "as": "renewables"
-            }
+            { "filter": "datum.Year == year_select" }
           ],
           "mark": { "type": "geoshape" },
           "encoding": {
+            "shape": { "field": "geo", "type": "geojson" },
             "color": {
-              "field": "Access to electricity (% of population)",
-              "title": "% of population",
+              "field": "netgeneration",
               "type": "quantitative",
-              "scale": {
-                "type": "ordinal",
-                "range": [
-                  "#C7E9C0",
-                  "#A1D99B",
-                  "#74C476",
-                  "#41AB5D",
-                  "#238B45",
-                  "#005A32"
-                ]
-              }
+              "scale": { "scheme": "bluegreen" }
+            },
+
+            "opacity": {
+              "condition": { "param": "country_select", "value": 1 },
+              "value": 0
             },
             "tooltip": [
               {
-                "field": "Access to electricity (% of population)",
-                "type": "quantitative",
-                "title": "% Access to electricity"
-              },
-              {
-                "field": "properties.NAME",
+                "field": "Country",
                 "type": "nominal",
                 "title": "Country"
-              }
+              },
+              {
+                "field": "netgeneration",
+                "type": "quantitative",
+                "title": "Net Energy Generated"
+              },
+              { "field": "Year" }
             ]
           }
         }
       ]
     },
+
     {
-      "layer": [
+      "transform": [{ "filter": "datum.Year == year_select" }],
+      "vconcat": [
         {
-          "width": 500,
-          "height": 400,
-          "title": "CO2 emissions (2000-2019)",
-          "mark": "line",
           "params": [
             {
-              "name": "country_selection",
-              "select": { "type": "point", "fields": ["Entity"] },
-              "bind": "legend"
+              "name": "country_select",
+              "select": {
+                "type": "point"
+              }
             }
           ],
+          "transform": [
+            {
+              "window": [
+                {
+                  "op": "rank",
+                  "field": "imports",
+
+                  "as": "rank"
+                }
+              ],
+              "sort": [{ "field": "imports", "order": "descending" }]
+            },
+            { "filter": "datum.rank <= 10" }
+          ],
+          "title": "Electricity Imports",
+          "mark": "bar",
           "encoding": {
             "x": {
-              "field": "Year",
-              "type": "temporal",
-              "title": "Year"
+              "field": "imports",
+              "type": "quantitative",
+              "title": "Net Electricity Imports"
             },
             "y": {
-              "field": "Value_co2_emissions_kt_by_country",
-              "type": "quantitative",
-              "title": "CO2 emissions (kt)"
-            },
-            "color": {
-              "field": "Entity",
+              "field": "Country",
               "type": "nominal",
-              "title": "Countries"
+              "sort": "-x"
+            },
+
+            "color": {
+              "field": "Country",
+              "legend": null,
+
+              "scale": { "scheme": "category20" }
             },
             "opacity": {
-              "condition": { "param": "country_selection", "value": 0.6 },
+              "condition": { "param": "country_select", "value": 1 },
               "value": 0.2
             },
             "tooltip": [
               {
-                "field": "Year",
-                "type": "temporal"
+                "field": "Country"
               },
-              { "field": "Entity", "type": "nominal" },
               {
-                "field": "Value_co2_emissions_kt_by_country",
-                "title": "CO2 Emissions (kt)"
-              }
+                "field": "Year"
+              },
+              { "field": "imports" },
+              { "field": "rank" }
             ]
-          },
+          }
+        },
+
+        {
           "transform": [
             {
-              "filter": {
-                "field": "Entity",
-                "oneOf": [
-                  "Australia",
-                  "United States of America",
-                  "Russia",
-                  "China",
-                  "Japan",
-                  "Greece",
-                  "New Zealand",
-                  "Netherlands",
-                  "Singapore",
-                  "Germany",
-                  "France",
-                  "United Kingdom",
-                  "Malta"
-                ]
-              }
+              "window": [
+                {
+                  "op": "rank",
+
+                  "as": "rank"
+                }
+              ],
+              "sort": [{ "field": "exports", "order": "descending" }]
             },
-            {
-              "filter": {
-                "timeUnit": "year",
-                "field": "Year",
-                "range": [2000, 2019]
-              }
-            }
-          ]
-        },
-        {
-          "mark": "point",
+            { "filter": "datum.rank <= 10" }
+          ],
+          "title": "Electricity Exports",
+          "mark": "bar",
           "encoding": {
             "x": {
-              "field": "Year",
-              "type": "temporal",
-              "title": "Year"
+              "field": "exports",
+              "type": "quantitative",
+              "title": "Net Electricity Imports"
             },
             "y": {
-              "field": "Value_co2_emissions_kt_by_country",
-              "type": "quantitative",
-              "title": "CO2 emissions (kt)"
-            },
-            "color": {
-              "field": "Entity",
+              "field": "Country",
               "type": "nominal",
-              "title": "Countries"
+              "sort": "-x"
+            },
+
+            "color": {
+              "field": "Country",
+              "type": "nominal"
             },
             "tooltip": [
               {
-                "field": "Year",
-                "type": "temporal"
+                "field": "Country"
               },
-              { "field": "Entity", "type": "nominal" },
               {
-                "field": "Value_co2_emissions_kt_by_country",
-                "title": "CO2 Emissions (kt)"
-              }
-            ],
-            "opacity": {
-              "condition": { "param": "country_selection", "value": 0.6 },
-              "value": 0.2
-            }
-          },
-          "transform": [
-            {
-              "filter": {
-                "field": "Entity",
-                "oneOf": [
-                  "Australia",
-                  "United States of America",
-                  "Russia",
-                  "China",
-                  "Japan",
-                  "Greece",
-                  "New Zealand",
-                  "Netherlands",
-                  "Singapore",
-                  "Germany",
-                  "France",
-                  "United Kingdom",
-                  "Malta"
-                ]
-              }
-            },
-            {
-              "filter": {
-                "timeUnit": "year",
-                "field": "Year",
-                "range": [2000, 2019]
-              }
-            }
-          ]
+                "field": "Year"
+              },
+              { "field": "exports" }
+            ]
+          }
         }
       ]
     }
