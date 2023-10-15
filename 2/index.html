@@ -1,21 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
-    
-    <!-- CSS file -->
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
-</head>
-<body>
 
-    <div id="co2_emissions">
-    <script type="text/javascript">
-        var spec2 = "js/Global Electricity Statisitcs.vg.json"
-        vegaEmbed("#co2_emissions", spec2).then(function(result){}).catch(console.error);
-      </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Mulish&family=Noto+Serif:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <header><h1>Global Energy Statistics</h1></header>
+  <body>
+    <div class="outer">
+      <div id="image"></div>
+      <div class="intro">
+        The world is still battling the climate crisis with 87% of the world's
+        <span class="bad">greenhouse gases</span> being a product of our energy
+        production proccesses. However, the solution is not just simply to
+        reduce use of <span class="bad">fossil fuels</span>. Below we will look
+        at another energy crisis that is not often talked about.
       </div>
-    
-</body>
+      <div class="inner">
+        <div class="vis_title">Global Energy Production</div>
+        <div id="global_energy">
+          <script type="text/javascript">
+            var spec = "js/Global Electricity Statisitcs.vg.json";
+            vegaEmbed("#global_energy", spec)
+              .then(function (result) {})
+              .catch(console.error);
+          </script>
+        </div>
+        <div class="text_box">
+          In the last 10 years, both United States of America and China have
+          been the largest
+          <span class="green">producers of electricity</span> by a large margin
+          as compared to the rest of the world with North America being one of
+          the largest importers of energy and Europe the largest exporters of
+          energy.
+        </div>
+      </div>
+      <div class="inner">
+        <div class="vis_title">Global Energy Consumption</div>
+        <div id="sustainable_energy">
+          <script type="text/javascript">
+            var spec = "js/Sustainable Energy Statistics.vg.json";
+            vegaEmbed("#sustainable_energy", spec)
+              .then(function (result) {})
+              .catch(console.error);
+          </script>
+        </div>
+        <div class="text_box">
+          The <span class="bad">energy consumption</span> per capita has
+          decreased globally and we can see a steady increase in the production
+          of cleaner fuels with countries like Canada and Brazil which has more
+          than 80% of their electricity being produced from
+          <span class="green">clean fuels</span>. Countries like China and USA
+          who are the largest consumers of
+          <span class="bad">fossil fuels</span> have also increased their
+          <span class="green">renewable energy production by 50%</span> from
+          2000 - 2020.
+        </div>
+      </div>
+      <div class="last_container">
+        <div class="vis_title">Global Energy Production</div>
+        <div id="scatter_matrix">
+          <script type="text/javascript">
+            var spec = "js/Scatter Matrix.vg.json";
+            vegaEmbed("#scatter_matrix", spec)
+              .then(function (result) {})
+              .catch(console.error);
+          </script>
+        </div>
+        <div class="text_box">
+          Majority of the world has made some slow and steady strides to
+          <span class="green">renewable and clean</span> energies however, there
+          is another problem that needs to be addressed which can be seen on the
+          left sides of these scatter plots. Countries with low GDP Per Capita
+          less than 10,000 like Uganda and Ethiopia are struggling to have
+          access to any energy at all. We can see from the first scatter plot
+          renewable energy is a privilege only for wealthy countries. Poorer
+          countries like Uganda and Ethiopia lack access to modern energy
+          sources and, as a result, the majority of the population would have to
+          rely on <span class="bad">solid fuel sources</span> like firewood. The
+          use of firewood is predominantly used in homes which carries a high
+          risk of respitory problems as combustion of firewood releases
+          <span class="bad">methane and carbon monoxide</span> into the air.
+          <p>
+            While the world is struggling with global CO2 pollution, less
+            developed countries are also struggling with indoor pollution due to
+            energy poverty. Until these issues are addressed it seems unlikely
+            that the world will be able to solve our current energy crisis
+            anytime soon.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
