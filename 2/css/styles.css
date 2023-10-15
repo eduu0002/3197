@@ -1,0 +1,83 @@
+header {
+  font-family: "Merriweather", serif;
+  text-align: center;
+  font-size: large;
+  color: rgb(30, 64, 139);
+}
+
+body {
+  background-color: rgb(218, 232, 244);
+}
+
+#image {
+  width: 900px;
+  height: 450px;
+  margin: 0 auto;
+  margin-bottom: 1cm;
+  background-image: url("Vis_background.jpg");
+  background-size: cover;
+}
+
+.outer {
+  font-family: "Mulish", sans-serif;
+  font-size: 20px;
+  background-color: rgb(233, 247, 241);
+  margin: 0 auto;
+  max-width: 25cm;
+  text-align: center;
+  border-style: solid;
+  padding: 20px;
+}
+
+.intro {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1cm;
+}
+
+#global_energy {
+  margin: 0 auto;
+  min-width: fit-content;
+  background-color: rgb(255, 255, 255);
+}
+
+#sustainable_energy {
+  margin: 0 auto;
+  min-width: fit-content;
+  background-color: rgb(255, 255, 255);
+}
+
+#scatter_matrix {
+  margin: 0 auto;
+  min-width: fit-content;
+  background-color: rgb(255, 255, 255);
+}
+
+.inner {
+  margin-bottom: 2cm;
+  box-shadow: 0px 0px 5px 1px rgba(19, 95, 44, 0.3);
+}
+
+.text_box {
+  max-width: 90%;
+  margin: auto;
+}
+
+.vis_title {
+  font-family: "Noto Serif", serif;
+  font-size: larger;
+}
+
+.bad {
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+}
+
+.green {
+  color: rgb(5, 132, 5);
+  font-weight: bold;
+}
+
+.last_container {
+  box-shadow: 0px 0px 5px 1px rgba(19, 95, 44, 0.3);
+}
