@@ -15,7 +15,7 @@
     <!-- CSS file -->
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <header><h1>Global Energy Statistics</h1></header>
+  <header><h1>Global Energy Crisis</h1></header>
   <body>
     <div class="outer">
       <div id="image"></div>
@@ -31,7 +31,7 @@
         <div id="global_energy">
           <script type="text/javascript">
             var spec = "js/Global Electricity Statisitcs.vg.json";
-            vegaEmbed("#global_energy", spec)
+            vegaEmbed("#global_energy", spec, { actions: false })
               .then(function (result) {})
               .catch(console.error);
           </script>
@@ -50,7 +50,7 @@
         <div id="sustainable_energy">
           <script type="text/javascript">
             var spec = "js/Sustainable Energy Statistics.vg.json";
-            vegaEmbed("#sustainable_energy", spec)
+            vegaEmbed("#sustainable_energy", spec, { actions: false })
               .then(function (result) {})
               .catch(console.error);
           </script>
@@ -68,11 +68,13 @@
         </div>
       </div>
       <div class="last_container">
-        <div class="vis_title">Global Energy Production</div>
+        <div class="vis_title">
+          Percentage Access to Energy vs GDP Per Capita
+        </div>
         <div id="scatter_matrix">
           <script type="text/javascript">
             var spec = "js/Scatter Matrix.vg.json";
-            vegaEmbed("#scatter_matrix", spec)
+            vegaEmbed("#scatter_matrix", spec, { actions: false })
               .then(function (result) {})
               .catch(console.error);
           </script>
