@@ -137,15 +137,18 @@
       ],
 
       "mark": "bar",
+      "title": "Top 10 Energy Consumers - Electricity by type",
       "encoding": {
         "x": {
           "field": "Entity",
           "type": "nominal",
-          "sort": "-y"
+          "sort": "-y",
+          "title": "Country"
         },
         "y": {
           "field": "energy_value",
-          "type": "quantitative"
+          "type": "quantitative",
+          "title": "Terawatt-hours"
         },
         "opacity": {
           "condition": { "param": "country_select", "value": 1 },
@@ -160,10 +163,10 @@
             "legendX": 490,
             "legendY": 450
           },
-          "title": "Energy Type"
+          "title": "Energy Sources"
         },
         "tooltip": [
-          { "field": "type_of_energy", "title": "Energy Type " },
+          { "field": "type_of_energy", "title": "Source " },
           { "field": "energy_value", "title": "Terawatt-hours" },
           { "field": "total_energy", "title": "Total(TWh) " }
         ]

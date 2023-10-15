@@ -5,8 +5,7 @@
       "Renewables (% equivalent primary energy)",
       "Access to electricity (% of population)",
       "Access to clean fuels for cooking"
-    ],
-    "column": ["gdp_per_capita"]
+    ]
   },
   "spec": {
     "data": {
@@ -43,9 +42,10 @@
     ],
     "encoding": {
       "x": {
-        "field": { "repeat": "column" },
+        "field": "gdp_per_capita",
         "type": "quantitative",
-        "scale": { "type": "log", "domain": [150, 100000] }
+        "scale": { "type": "log", "domain": [150, 100000] },
+        "title": "GDP Per Capita"
       },
       "y": {
         "field": { "repeat": "row" },

@@ -124,7 +124,7 @@
             },
             { "filter": "datum.rank <= 10" }
           ],
-          "title": "Electricity Imports",
+          "title": "Top 10 Electricity Imports",
           "mark": "bar",
           "encoding": {
             "x": {
@@ -155,8 +155,7 @@
               {
                 "field": "Year"
               },
-              { "field": "imports" },
-              { "field": "rank" }
+              { "field": "imports", "title": "Net Imports(billion kWh)  " }
             ]
           }
         },
@@ -184,7 +183,7 @@
             },
             { "filter": "datum.rank <= 10" }
           ],
-          "title": "Electricity Exports",
+          "title": "Top 10 Electricity Exports",
           "mark": "bar",
           "encoding": {
             "x": {
@@ -216,7 +215,7 @@
               {
                 "field": "Year"
               },
-              { "field": "exports" }
+              { "field": "exports", "title": "Net Exports(billion kWh)" }
             ]
           }
         }
