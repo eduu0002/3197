@@ -3,6 +3,7 @@
   "data": {
     "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/Data/Global%20Electricity%20Statistics_cleaned.csv"
   },
+  "config": { "background": null },
   "params": [
     {
       "name": "year_select",
@@ -18,8 +19,9 @@
   ],
   "vconcat": [
     {
-      "width": 400,
-      "title": "Global Electricity Production",
+      "width": 670,
+      "height": 400,
+      "title": "Click on a bar to find location of country",
       "resolve": { "scale": { "color": "independent" } },
       "projection": { "type": "equalEarth" },
       "layer": [
@@ -51,7 +53,7 @@
               "lookup": "Country",
               "from": {
                 "data": {
-                  "url": "world_map_with_graticles.json",
+                  "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/js/world_map_with_graticles.json",
                   "format": {
                     "type": "topojson",
                     "feature": "ne_110m_admin_0_countries"
@@ -69,7 +71,8 @@
             "color": {
               "field": "netgeneration",
               "type": "quantitative",
-              "scale": { "scheme": "bluegreen" }
+              "scale": { "scheme": "bluegreen" },
+              "title": "Billion Kilowatthours"
             },
 
             "opacity": {
@@ -85,7 +88,7 @@
               {
                 "field": "netgeneration",
                 "type": "quantitative",
-                "title": "Net Energy Generated"
+                "title": "Net Energy Generated(kWh)  "
               },
               { "field": "Year" }
             ]
@@ -96,8 +99,9 @@
 
     {
       "transform": [{ "filter": "datum.Year == year_select" }],
-      "vconcat": [
+      "hconcat": [
         {
+          "width": 300,
           "params": [
             {
               "name": "country_select",
@@ -126,7 +130,7 @@
             "x": {
               "field": "imports",
               "type": "quantitative",
-              "title": "Net Electricity Imports"
+              "title": "Billion kWh"
             },
             "y": {
               "field": "Country",
@@ -158,6 +162,15 @@
         },
 
         {
+          "width": 300,
+          "params": [
+            {
+              "name": "country_select",
+              "select": {
+                "type": "point"
+              }
+            }
+          ],
           "transform": [
             {
               "window": [
@@ -177,7 +190,7 @@
             "x": {
               "field": "exports",
               "type": "quantitative",
-              "title": "Net Electricity Imports"
+              "title": "Billion kWh"
             },
             "y": {
               "field": "Country",
@@ -188,6 +201,13 @@
             "color": {
               "field": "Country",
               "type": "nominal"
+            },
+            "opacity": {
+              "condition": {
+                "param": "country_select",
+                "value": 1
+              },
+              "value": 0.2
             },
             "tooltip": [
               {

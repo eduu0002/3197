@@ -2,20 +2,18 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "repeat": {
     "row": [
-      "Value_co2_emissions_kt_by_country",
-      "Electricity from fossil fuels (TWh)",
-      "Electricity from renewables (TWh)"
+      "Renewables (% equivalent primary energy)",
+      "Access to electricity (% of population)",
+      "Access to clean fuels for cooking"
     ],
-    "column": [
-      "Electricity from renewables (TWh)",
-      "Electricity from fossil fuels (TWh)",
-      "Value_co2_emissions_kt_by_country"
-    ]
+    "column": ["gdp_per_capita"]
   },
   "spec": {
     "data": {
       "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/Data/global-data-on-sustainable-energy.csv"
     },
+    "width": 600,
+    "height": 200,
     "mark": "point",
     "params": [
       {
@@ -39,18 +37,29 @@
         "bind": "scales"
       }
     ],
+    "transform": [
+      { "filter": "datum.Year == 2019" },
+      { "filter": "datum.gdp_per_capita >= 100" }
+    ],
     "encoding": {
-      "x": { "field": { "repeat": "column" }, "type": "quantitative" },
+      "x": {
+        "field": { "repeat": "column" },
+        "type": "quantitative",
+        "scale": { "type": "log", "domain": [150, 100000] }
+      },
       "y": {
         "field": { "repeat": "row" },
         "type": "quantitative",
-        "axis": { "minExtent": 30 }
+        "scale": {
+          "domain": [0, 100]
+        }
       },
       "tooltip": [
         {
           "field": "Entity",
           "type": "nominal"
-        }
+        },
+        { "field": "gdp_per_capita" }
       ],
       "color": {
         "condition": {

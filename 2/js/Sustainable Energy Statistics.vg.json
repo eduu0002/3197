@@ -18,14 +18,14 @@
   ],
   "vconcat": [
     {
-      "width": 400,
-      "title": "Global Energy Consumption",
+      "width": 670,
+      "height": 400,
       "resolve": { "scale": { "color": "independent" } },
       "projection": { "type": "equalEarth" },
       "layer": [
         {
           "data": {
-            "url": "world_map_with_graticles.json",
+            "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/js/world_map_with_graticles.json",
             "format": {
               "type": "topojson",
               "feature": "ne_110m_admin_0_countries"
@@ -51,7 +51,7 @@
               "lookup": "Entity",
               "from": {
                 "data": {
-                  "url": "world_map_with_graticles.json",
+                  "url": "https://raw.githubusercontent.com/eduu0002/3197/main/2/js/world_map_with_graticles.json",
                   "format": {
                     "type": "topojson",
                     "feature": "ne_110m_admin_0_countries"
@@ -69,7 +69,12 @@
             "color": {
               "field": "Primary energy consumption per capita (kWh/person)",
               "type": "quantitative",
-              "scale": { "scheme": "orangered" }
+              "scale": { "scheme": "orangered" },
+              "title": "Kilowatthours"
+            },
+            "opacity": {
+              "condition": { "param": "country_select", "value": 1 },
+              "value": 0.1
             },
             "tooltip": [
               {
@@ -89,6 +94,15 @@
       ]
     },
     {
+      "width": 670,
+      "params": [
+        {
+          "name": "country_select",
+          "select": {
+            "type": "point"
+          }
+        }
+      ],
       "transform": [
         {
           "fold": [
@@ -133,14 +147,25 @@
           "field": "energy_value",
           "type": "quantitative"
         },
+        "opacity": {
+          "condition": { "param": "country_select", "value": 1 },
+          "value": 0.2
+        },
         "color": {
           "field": "type_of_energy",
-          "type": "nominal"
+          "type": "nominal",
+          "scale": { "scheme": "viridis" },
+          "legend": {
+            "orient": "none",
+            "legendX": 490,
+            "legendY": 450
+          },
+          "title": "Energy Type"
         },
         "tooltip": [
-          { "field": "type_of_energy" },
-          { "field": "energy_value" },
-          { "field": "total_energy" }
+          { "field": "type_of_energy", "title": "Energy Type " },
+          { "field": "energy_value", "title": "Terawatt-hours" },
+          { "field": "total_energy", "title": "Total(TWh) " }
         ]
       }
     }
